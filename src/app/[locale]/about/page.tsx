@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
-import { Locale } from '@/i18n/routing';
 
-export async function generateMetadata({ params: { locale } }: { params: { locale: Locale } }) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
     const messages = await import(`../../../../messages/${locale}/about.json`);
     return {
         messages: messages.default,

@@ -10,11 +10,15 @@ export function generateStaticParams() {
 
 export default async function LocaleLayout({
     children,
-    params: { locale },
+    params,
 }: {
     children: React.ReactNode;
-    params: { locale: string };
+    params: Promise<{ locale: string }>;
 }) {
+    // 等待參數解析
+    const locale = (await params).locale;
+
+    // 驗證 locale
     if (!routing.locales.includes(locale as Locale)) {
         notFound();
     }
